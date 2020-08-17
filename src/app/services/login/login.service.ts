@@ -52,14 +52,14 @@ export class LoginService {
     headers.append('Content-Type', 'application/json');
     headers.append(
       'Authorization',
-      this.getCurrentUser().key
+      this.getCurrentUser().token
     );
 
     localStorage.removeItem(this.CURRENT_USER);
     this.currentUserSubject.next(null);
 
     return this.http
-      .post(`${environment.eventsRestApiHost}/api/v1/logout/`, {
+      .post(`${environment.eventsRestApiHost}/api/logout/`, {
         headers: headers
       })
       .pipe(

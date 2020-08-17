@@ -3,6 +3,7 @@ import { Headers, Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { LoginService } from '../login/login.service';
+import { Event } from '../../model/events.model';
 
 
 @Injectable({
@@ -15,9 +16,9 @@ export class EventsService {
 
   constructor(private http: Http, private authService: LoginService) {
     this.headers = new Headers();
-    const userKey = authService.getCurrentUser().key;
-    const key = 'Token ' + userKey;
-    this.headers.append('Authorization', key);
+    const userToken = authService.getCurrentUser().token;
+    const token = 'Token ' + userToken;
+    this.headers.append('Authorization', token);
     this.headers.append('Content-Type', 'application/json');
   }
 
@@ -36,4 +37,27 @@ export class EventsService {
       })
       .pipe(map(res => res.json()));
   }
+  public createEvent(event: Event) {
+    return this.http
+      .post(this.environment + '/api/events/',
+      {
+        event_name: event.event_name,
+        event_type: event.event_type,
+        event_place: event.event_place,
+        event_address: event.event_address,
+        event_category: event.event_category,
+        event_initial_date: event.event_initial_date,
+        event_final_date: event.event_final_date,
+        thumbnail: event.thumbnail,
+      },
+      {headers: this.headers})
+      .pipe(map(res => res.json()));
+  }
+
+  public deleteEvent(id: string) {
+        return this.http
+          .delete(this.environment + '/api/events/' + id + '/',
+          {headers: this.headers})
+          .pipe(map(res => res.json()));
+      }
 }

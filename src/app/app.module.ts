@@ -11,14 +11,18 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ErrorInterceptor } from "./helpers/error.interceptor";
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { EventDetailsComponent } from './events/event-details/event-details.component';
+import { HeaderModule } from './header/header.module';
+import { EventCreateComponent } from './events/event-create/event-create.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    EventsComponent
+    EventsComponent,
+    EventDetailsComponent,
+    EventCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,9 +32,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HeaderModule
   ],
-  providers: [   
+  providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

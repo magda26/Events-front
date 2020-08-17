@@ -1,0 +1,18 @@
+<div class="card" style="width: 900px;">
+  <div class="row no-gutters">
+    <div class="col-md-4 p-2">
+      <img [src]="event.thumbnail" class="card-img" alt="{{ event.event_name }} ">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ event.event_name }} </h5>
+        <p class="card-text">Categoría: {{ event.event_category }}</p>
+        <p class="card-text">Lugar: {{ event.event_place }}</p>
+        <p class="card-text">Dirección: {{ event.event_address }}</p>
+        <p class="card-text">Tipo: {{ event.event_type }}</p>
+        <p class="card-text">Fecha de inicio: {{ event.event_initial_date | date:'dd/MM/yyyy' }}</p>
+        <p class="card-text">Fecha de finalización: {{ event.event_final_date | date:'dd/MM/yyyy' }}</p>
+      </div>
+    </div>
+  </div>
+</div>

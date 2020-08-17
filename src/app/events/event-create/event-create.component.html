@@ -1,0 +1,69 @@
+
+<div class="card mx-auto px-4 pt-4 pb-4 mt-3 mb-3" style="width: 100%;">
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" >
+    <div class="form-group">
+      <label for="event_name">Nombre</label>
+      <input type="text" class="form-control" formControlName="event_name" id="event_name" aria-describedby="userHelp"
+             [ngClass]="{ 'is-invalid': submitted && f.event_name.errors }"/>
+      <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+        <div *ngIf="f.event_name.errors.required">El nombre es requerido</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="event_place">event_place</label>
+      <input type="test" class="form-control" id="event_place" formControlName="event_place" aria-describedby="emailHelp"
+             [ngClass]="{ 'is-invalid': submitted && f.event_place.errors }"/>
+      <div *ngIf="submitted && f.event_place.errors" class="invalid-feedback">
+        <div *ngIf="f.event_place.errors.required">El event_place es requerido</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="event_address">event_address</label>
+      <input type="text" class="form-control" id="event_address" formControlName="event_address" aria-describedby="nameHelp"
+             [ngClass]="{ 'is-invalid': submitted && f.event_address.errors }"/>
+      <div *ngIf="submitted && f.event_address.errors" class="invalid-feedback">
+        <div *ngIf="f.event_address.errors.required">Digite su event_address</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="event_initial_date">event_initial_date</label>
+      <input type="date" class="form-control" id="event_initial_date" formControlName="event_initial_date" aria-describedby="lastnameHelp"
+             [ngClass]="{ 'is-invalid': submitted && f.event_initial_date.errors }"/>
+      <div *ngIf="submitted && f.event_initial_date.errors" class="invalid-feedback">
+        <div *ngIf="f.event_initial_date.errors.required">Digite su apellido</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="event_final_date">event_initial_date</label>
+      <input type="date" class="form-control" id="event_final_date" formControlName="event_final_date" aria-describedby="lastnameHelp"
+             [ngClass]="{ 'is-invalid': submitted && f.event_final_date.errors }"/>
+      <div *ngIf="submitted && f.event_final_date.errors" class="invalid-feedback">
+        <div *ngIf="f.event_final_date.errors.required">Digite su event_final_date</div>
+      </div>
+    </div>
+
+    <div class = "row">
+      <div class="form-group" style=" padding : 20px 40px;" >
+        <label for="event_final_date">Category</label>
+        <select  formControlName="event_category"  >
+          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-group" style=" padding : 20px 40px;" >
+        <label for="event_final_date">Type:</label>
+        <select  formControlName="event_type"  >
+          <option *ngFor="let type of types" [value]="type.id">{{ type.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <button [disabled]="!eventForm.valid" class="btn btn-primary">Crear evento</button>
+      &nbsp;
+      <button type="submit" class="btn btn-secondary" [routerLink]="['/login']">Cancelar</button>
+    </div>
+    <div *ngIf="show_error" class="alert alert-danger mt-3 mb-0" role="alert">
+      {{msj_error}}
+    </div>
+  </form>
+</div>

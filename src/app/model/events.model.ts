@@ -14,12 +14,12 @@ export class Event {
 }
 
 export class Type {
-  id: number;
+  id: string;
   name: string;
 }
 
 export class Category {
-  id: number;
+  id: string;
   name: string;
 }
 

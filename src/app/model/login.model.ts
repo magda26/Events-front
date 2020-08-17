@@ -1,5 +1,5 @@
 export class AuthenticationResponse {
-  key: string;
+  token: string;
   user: AuthenticatedUser;
 }
 

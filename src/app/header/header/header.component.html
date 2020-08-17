@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <p class="navbar-brand">Events Manage </p>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item" [ngClass]="{active: router.url != '/events'}"
+          *ngIf="authService.isCurrentUserAuthenticated()">
+        <a class="nav-link" [routerLink]="['/events']"
+           [ngClass]="{disabled: router.url == '/events'}">Eventos</a>
+      </li>
+      <li class="nav-item" [ngClass]="{active: router.url != '/users'}"
+          *ngIf="!authService.isCurrentUserAuthenticated()">
+        <a class="nav-link" [routerLink]="['/users']"
+           [ngClass]="{disabled: router.url == '/users'}">Registro</a>
+      </li>
+      <li class="nav-item" [ngClass]="{active: router.url != '/login'}"
+          *ngIf="!authService.isCurrentUserAuthenticated()">
+        <a class="nav-link" [routerLink]="['/login']"
+           [ngClass]="{disabled: router.url == '/login'}">Login</a>
+      </li>
+      <li class="nav-item active" *ngIf="authService.isCurrentUserAuthenticated()">
+        <a class="nav-link" (click)="logout()">Cerrar sesión</a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,33 +1,51 @@
 
 <div class="container">
-  <div class="row pt-5">
-    <div class="col-lg-4 col-xl-4 col-sm-6 col-md-6 col-12 pt-5" style=" cursor: pointer" *ngFor="let event of events" >
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" [src]="event.thubmnail" alt="{{ event.event_name }}" >
+
+  <div class="col" [hidden]="!listEvent">
+    <div  class="row" >
+      <h2 class = "title" [hidden]="showEventDetail">Estos son sus eventos:</h2>
+      <button style=" height : min-content;"  class="btn btn-primary" (click)="openCreateEvent()">Crear un evento</button>
+    </div>
+  </div>
+  <div class="row pt-3" [hidden]="!listEvent">
+    <div class="col-lg-4 col-xl-4 col-sm-6 col-md-6 col-12" style=" cursor: pointer" *ngFor="let event of events" >
+      <div class="card " style="width: 18rem; margin: 3rem;">
         <div class="card-body">
-          <h5 class="card-title">{{ event.event_name }}</h5>
+          <h2 class="card-title">{{ event.event_name }}</h2>
           <ul>
-            <li>
-              Categoría: {{ event.event_category }}
-            </li>
             <li>
               Lugar: {{ event.event_place }}
             </li>
             <li>
-              Dirección: {{ event.event_address }}
-            </li>
-            <li>
               Fecha de inicio: {{ event.event_initial_date | date:'dd/MM/yyyy' }}
             </li>
-            <li>
-              Fecha de finalización: {{ event.event_final_date | date:'dd/MM/yyyy' }}
-            </li>
-            <li>
-              Tipo: {{ event.event_type }}
-            </li>
           </ul>
+          <div class="row" >
+            <button class="btn btn-info " (click)="viewEventDetails(event)">Ver detalles del evento</button>
+            &nbsp;
+            <button class="btn btn-danger fas fa-trash-alt" color="danger" (click)="deleteEvent(event)"></button>
+          </div >
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="row pt-5" *ngIf="showEventDetail">
+    <div class="container">
+      <h2 class = "title" >Información del evento:</h2>
+      <div class="row">
+        <app-event-details [event]="selectedEvent"></app-event-details>
+      </div>
+
+      <div class="row pb-3">
+        <button class="btn btn-secondary" (click)="comeBack()">Regresar</button>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-5" *ngIf="createEvent">
+    <div class="container">
+      <h2 class = "title" >Datos del evento que se creará:</h2>
+        <app-event-create> </app-event-create>
     </div>
   </div>
 </div>
