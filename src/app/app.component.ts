@@ -1,10 +1,20 @@
 import { Component } from '@angular/core';
+import { LoginService } from "./services/login/login.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'events-front';
+  
+  constructor(
+    private loginService: LoginService,
+    private router: Router) {
+  }
+
+  public logout(): void {
+    this.loginService.logout();
+    this.router.navigate(['/login'])
+  }
 }

@@ -1,0 +1,34 @@
+
+<div class="container">
+  <div class="row pt-5">
+    <div class="col-lg-4 col-xl-4 col-sm-6 col-md-6 col-12 pt-5" style=" cursor: pointer" *ngFor="let event of events" >
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" [src]="event.thubmnail" alt="{{ event.event_name }}" >
+        <div class="card-body">
+          <h5 class="card-title">{{ event.event_name }}</h5>
+          <ul>
+            <li>
+              Categoría: {{ event.event_category }}
+            </li>
+            <li>
+              Lugar: {{ event.event_place }}
+            </li>
+            <li>
+              Dirección: {{ event.event_address }}
+            </li>
+            <li>
+              Fecha de inicio: {{ event.event_initial_date | date:'dd/MM/yyyy' }}
+            </li>
+            <li>
+              Fecha de finalización: {{ event.event_final_date | date:'dd/MM/yyyy' }}
+            </li>
+            <li>
+              Tipo: {{ event.event_type }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
