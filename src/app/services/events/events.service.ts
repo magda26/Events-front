@@ -47,17 +47,32 @@ export class EventsService {
         event_address: event.event_address,
         event_category: event.event_category,
         event_initial_date: event.event_initial_date,
-        event_final_date: event.event_final_date,
-        thumbnail: event.thumbnail,
+        event_final_date: event.event_final_date
       },
       {headers: this.headers})
       .pipe(map(res => res.json()));
   }
 
-  public deleteEvent(id: string) {
-        return this.http
-          .delete(this.environment + '/api/events/' + id + '/',
+  public editEvent(id: string, event: Event){
+    return this.http
+          .put(this.environment + '/api/events/'+ id + '/',
+          {
+            event_name: event.event_name,
+            event_type: event.event_type,
+            event_place: event.event_place,
+            event_address: event.event_address,
+            event_category: event.event_category,
+            event_initial_date: event.event_initial_date,
+            event_final_date: event.event_final_date,
+          },
           {headers: this.headers})
           .pipe(map(res => res.json()));
-      }
+  }
+
+  public deleteEvent(id: string) {
+    return this.http
+      .delete(this.environment + '/api/events/' + id + '/',
+      {headers: this.headers})
+      .pipe(map(res => res.json()));
+  }
 }

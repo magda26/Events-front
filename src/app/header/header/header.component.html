@@ -6,23 +6,21 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item" [ngClass]="{active: router.url != '/events'}"
-          *ngIf="authService.isCurrentUserAuthenticated()">
-        <a class="nav-link" [routerLink]="['/events']"
-           [ngClass]="{disabled: router.url == '/events'}">Eventos</a>
-      </li>
       <li class="nav-item" [ngClass]="{active: router.url != '/users'}"
           *ngIf="!authService.isCurrentUserAuthenticated()">
-        <a class="nav-link" [routerLink]="['/users']"
-           [ngClass]="{disabled: router.url == '/users'}">Registro</a>
+        &nbsp;
+        <button class="btn btn-primary" style=" cursor: pointer" [routerLink]="['/users']"
+           [ngClass]="{disabled: router.url == '/users'}">Registro</button>
       </li>
       <li class="nav-item" [ngClass]="{active: router.url != '/login'}"
           *ngIf="!authService.isCurrentUserAuthenticated()">
-        <a class="nav-link" [routerLink]="['/login']"
-           [ngClass]="{disabled: router.url == '/login'}">Login</a>
+        &nbsp;
+        <button class="btn btn-primary" style=" cursor: pointer" [routerLink]="['/login']"
+           [ngClass]="{disabled: router.url == '/login'}">Login</button>
       </li>
       <li class="nav-item active" *ngIf="authService.isCurrentUserAuthenticated()">
-        <a class="nav-link" (click)="logout()">Cerrar sesión</a>
+        &nbsp;
+        <button class="btn btn-secondary" style=" cursor: pointer" (click)="logout()">Cerrar sesión</button>
       </li>
     </ul>
   </div>

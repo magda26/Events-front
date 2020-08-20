@@ -2,27 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category,Type } from '../../model/events.model';
 import { EventsService } from '../../services/events/events.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-create',
-  templateUrl: './event-create.component.html',
-  styleUrls: ['./event-create.component.css']
+  templateUrl: './event-create.component.html'
 })
 export class EventCreateComponent implements OnInit {
   public categories: Category[] =  [{id :"CONFERENCE", name: "Conferencia"}, {id:"CONGRESS", name: "Congreso"},{id :"SEMINAR", name: "Seminario"}, {id:"COURSE", name: "Curso"}]
-  public types: Type[] =  [{id :"VIRTUAL", name: "Virtual"}, {id:"PRESENCIAL", name: "Precencial"}]
-  public selectedCategoryId: string;
+  public types: Type[] =  [{id :"VIRTUAL", name: "Virtual"}, {id:"PRESENCIAL", name: "Presencial"}]
   eventForm: FormGroup;
-  show_error = false;
   returnUrl: string;
-  msj_error = null;
   submitted = false;
 
   constructor(
-     private fb: FormBuilder,
-    private eventsService: EventsService,
-    private router: Router,
+    private fb: FormBuilder,
+    private eventsService: EventsService
   ) {
   }
 
@@ -46,9 +40,7 @@ export class EventCreateComponent implements OnInit {
     if ( this.eventForm.invalid ) {
       return;
     }
-    console.log(this.eventForm.value);
     this.eventsService.createEvent(this.eventForm.value).subscribe(data => {
-      console.log(data);
       window.location.reload();
     });
    }

@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 })
 
 export class EventsComponent implements OnInit {
+
   public events: Event[] = [];
   public selectedEvent: Event = new Event();
   public data: any;
@@ -24,14 +25,8 @@ export class EventsComponent implements OnInit {
 
   ngOnInit() {
     this.eventsService.getEvents().subscribe(data => {
-      this.processEventsResults(data);
+      this.events = data
     });
-  }
-
-  private processEventsResults(data: any): void {
-    console.log (data);
-    this.events = data;
-    this.data = data;
   }
 
   public viewEventDetails(event: Event): void {
@@ -40,12 +35,6 @@ export class EventsComponent implements OnInit {
       this.showEventDetail = true;
       this.listEvent = false;
     });
-  }
-  public comeBack(): void {
-    this.selectedEvent = new Event();
-    this.listEvent = true;
-    this.showEventDetail = false;
-    this.createEvent = false;
   }
 
   public openCreateEvent(): void {
@@ -62,16 +51,17 @@ export class EventsComponent implements OnInit {
       confirmButtonText: 'Si, eliminar'
     }).then((result) => {
       if (result.value) {
-            this.eventsService.deleteEvent(event.id).subscribe(data => {
-              this.selectedEvent = new Event();
-              console.log(this.events);
-              window.location.reload();
-            });
-        Swal.fire(
-          'Eliminado!',
-          'Su evento se ha eliminado con éxito.',
-          'success'
-        )
+        this.eventsService.deleteEvent(event.id).subscribe(data => {
+          this.selectedEvent = new Event();
+          this.eventsService.getEvents().subscribe(data => {
+            this.events = data
+          });
+          Swal.fire(
+            'Eliminado!',
+            'Su evento se ha eliminado con éxito.',
+            'success'
+          )
+        });
       }
     })
     }

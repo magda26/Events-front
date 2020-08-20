@@ -20,7 +20,7 @@
               Fecha de inicio: {{ event.event_initial_date | date:'dd/MM/yyyy' }}
             </li>
           </ul>
-          <div class="row" >
+          <div class="row" style=" margin: auto">
             <button class="btn btn-info " (click)="viewEventDetails(event)">Ver detalles del evento</button>
             &nbsp;
             <button class="btn btn-danger fas fa-trash-alt" color="danger" (click)="deleteEvent(event)"></button>
@@ -35,10 +35,6 @@
       <h2 class = "title" >Información del evento:</h2>
       <div class="row">
         <app-event-details [event]="selectedEvent"></app-event-details>
-      </div>
-
-      <div class="row pb-3">
-        <button class="btn btn-secondary" (click)="comeBack()">Regresar</button>
       </div>
     </div>
   </div>

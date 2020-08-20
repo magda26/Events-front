@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventDetailsComponent } from './events/event-details/event-details.component';
 import { HeaderModule } from './header/header.module';
 import { EventCreateComponent } from './events/event-create/event-create.component';
+import { UsersComponent } from './users/users.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { EventCreateComponent } from './events/event-create/event-create.compone
     EventsComponent,
     EventDetailsComponent,
     EventCreateComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

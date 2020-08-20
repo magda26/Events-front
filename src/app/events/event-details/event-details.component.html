@@ -1,18 +1,68 @@
-<div class="card" style="width: 900px;">
-  <div class="row no-gutters">
+
+  <div class="card mx-auto px-4 pt-4 pb-4 mt-3 mb-3" style="width: 100%;"  >
+  <div class="row no-gutters" *ngIf="!showEditEvent"  >
     <div class="col-md-4 p-2">
       <img [src]="event.thumbnail" class="card-img" alt="{{ event.event_name }} ">
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{ event.event_name }} </h5>
-        <p class="card-text">Categoría: {{ event.event_category }}</p>
+        <h2 class="card-title">{{ event.event_name }} </h2>
+        <p class="card-text">Categoría: {{ event.event_category.name }}</p>
         <p class="card-text">Lugar: {{ event.event_place }}</p>
         <p class="card-text">Dirección: {{ event.event_address }}</p>
-        <p class="card-text">Tipo: {{ event.event_type }}</p>
+        <p class="card-text">Tipo: {{ event.event_type.name }}</p>
         <p class="card-text">Fecha de inicio: {{ event.event_initial_date | date:'dd/MM/yyyy' }}</p>
         <p class="card-text">Fecha de finalización: {{ event.event_final_date | date:'dd/MM/yyyy' }}</p>
       </div>
     </div>
+    <div class="row" style=" margin: auto">
+      <button class="btn btn-info " (click)="editEvent(event)"> Editar evento </button>
+      &nbsp;
+      <button class="btn btn-secondary" [routerLink]="['/login']">Regresar</button>
+    </div >
   </div>
+
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" *ngIf="showEditEvent" >
+      <div class="form-group">
+        <label for="event_name">Nombre: </label>
+        <input type="text" class="form-control" formControlName="event_name" id="event_name"/>
+      </div>
+      <div class="form-group">
+        <label for="event_place">Lugar :</label>
+        <input type="test" class="form-control" id="event_place" formControlName="event_place"/>
+      </div>
+      <div class="form-group">
+        <label for="event_address">Dirección: </label>
+        <input type="text" class="form-control" id="event_address" formControlName="event_address"/>
+      </div>
+      <div class="form-group">
+        <label for="event_initial_date">Fecha de inicio: </label>
+        <input type="date" class="form-control" id="event_initial_date" formControlName="event_initial_date" />
+      </div>
+      <div class="form-group">
+        <label for="event_final_date">Fecha de finalización: </label>
+        <input type="date" class="form-control" id="event_final_date" formControlName="event_final_date"/>
+      </div>
+      <div class = "row">
+        <div class="form-group" style=" padding : 20px 40px;" >
+          <label for="event_final_date">Categoría: </label>
+          <select  formControlName="event_category"  >
+            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+          </select>
+        </div>
+        <div class="form-group" style=" padding : 20px 40px;" >
+          <label for="event_final_date">Tipo: </label>
+          <select  formControlName="event_type"  >
+            <option *ngFor="let type of types" [value]="type.id">{{ type.name }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row" style=" margin: auto">
+        <button type="submit" [disabled]="!eventForm.valid" class="btn btn-primary">Guardar cambios</button>
+        &nbsp;
+        <button class="btn btn-secondary" (click)="showEventDetail(event)">Regresar</button>
+      </div>
+    </form>
 </div>
+
+
