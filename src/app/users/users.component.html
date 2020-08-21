@@ -18,6 +18,14 @@
       </div>
     </div>
     <div class="form-group">
+      <label for="email">Email: </label>
+      <input type="email" class="form-control" id="email" formControlName="email"
+             [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">El email es requerido</div>
+      </div>
+    </div>
+    <div class="form-group">
       <label for="username">Username: </label>
       <input type="text" class="form-control" id="username" formControlName="username"
              [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
@@ -25,14 +33,6 @@
         <div *ngIf="f.username.errors.required">El usuario es requerido</div>
       </div>
 
-    </div>
-    <div class="form-group">
-      <label for="email">Email: </label>
-      <input type="email" class="form-control" id="email" formControlName="email"
-             [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
-      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-        <div *ngIf="f.email.errors.required">El email es requerido</div>
-      </div>
     </div>
     <div class="form-group">
       <label for="password1">Contraseña: </label>
