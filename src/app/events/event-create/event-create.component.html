@@ -37,10 +37,14 @@
         </select>
       </div>
     </div>
-    <div class="row" style=" margin: auto">
-      <button type="submit" [disabled]="!eventForm.valid" class="btn btn-primary">Crear evento</button>
+    <div class="row" >
+      <button type="submit" [disabled]="!eventForm.valid" style=" margin: auto;" class="btn btn-primary">Crear evento</button>
       &nbsp;
-      <button class="btn btn-secondary" [routerLink]="['/login']">Cancelar</button>
+      <button class="btn btn-secondary" style=" margin: auto;" [routerLink]="['/login']">Cancelar</button>
+    </div>
+    &nbsp;      &nbsp;
+    <div class="row" style=" margin: auto">
+      <h4>Recuerde que todos los campos son requeridos</h4>
     </div>
   </form>
 </div>

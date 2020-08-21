@@ -5,5 +5,4 @@ export class AuthenticationResponse {
 
 export class AuthenticatedUser {
   id: number;
-  username: string;
 }
