@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../services/events/events.service';
 import { Event } from '../model/events.model';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 
 @Component({
