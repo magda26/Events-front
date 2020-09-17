@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { LoginService } from '../login/login.service';
 import { Event } from '../../model/events.model';
-
 
 @Injectable({
   providedIn: 'root'
@@ -12,32 +9,40 @@ import { Event } from '../../model/events.model';
 
 export class EventsService {
   public headers: Headers;
+  readonly TOKEN: string = 'token';
   public environment: any = environment.eventsRestApiHost;
 
-  constructor(private http: Http, private authService: LoginService) {}
+  constructor(private httpClient: HttpClient) {}
+
+  getDesigns(id:string) {
+    let headers = this.getHeaders();
+    return this.httpClient.get(
+                this.environment + "/api/v1/designs/?project="+id,
+                { headers }
+              );
+  }
+
+
 
   public getEvents() {
-    this.getHeaders();
-    return this.http
-      .get(this.environment + '/api/events/',
-       {
-        headers: this.headers
-      })
-      .pipe(map(res => res.json()));
+    let headers = this.getHeaders();
+    return this.httpClient.get(
+      this.environment + '/api/events/',
+      {headers}
+    );
   }
 
   public getEventDetails(id: string) {
-    this.getHeaders();
-    return this.http
-      .get(this.environment + '/api/events/' + id + '/', {
-        headers: this.headers
-      })
-      .pipe(map(res => res.json()));
+    let headers = this.getHeaders();
+    return this.httpClient.get(
+      this.environment + '/api/events/' + id + '/',
+      {headers}
+    );
   }
   public createEvent(event: Event) {
-    this.getHeaders();
-    return this.http
-      .post(this.environment + '/api/events/',
+    let headers = this.getHeaders();
+    return this.httpClient.post(
+      this.environment + '/api/events/',
       {
         event_name: event.event_name,
         event_type: event.event_type,
@@ -47,40 +52,42 @@ export class EventsService {
         event_initial_date: event.event_initial_date,
         event_final_date: event.event_final_date
       },
-      {headers: this.headers})
-      .pipe(map(res => res.json()));
+      {headers }
+    );
   }
 
   public editEvent(id: string, event: Event){
-    this.getHeaders();
-    return this.http
-          .put(this.environment + '/api/events/'+ id + '/',
-          {
-            event_name: event.event_name,
-            event_type: event.event_type,
-            event_place: event.event_place,
-            event_address: event.event_address,
-            event_category: event.event_category,
-            event_initial_date: event.event_initial_date,
-            event_final_date: event.event_final_date,
-          },
-          {headers: this.headers})
-          .pipe(map(res => res.json()));
+    let headers = this.getHeaders();
+    return this.httpClient.put(
+      this.environment + '/api/events/'+ id + '/',
+      {
+        event_name: event.event_name,
+        event_type: event.event_type,
+        event_place: event.event_place,
+        event_address: event.event_address,
+        event_category: event.event_category,
+        event_initial_date: event.event_initial_date,
+        event_final_date: event.event_final_date,
+      },
+      {headers}
+    );
   }
 
   public deleteEvent(id: string) {
-    this.getHeaders();
-    return this.http
-      .delete(this.environment + '/api/events/' + id + '/',
-      {headers: this.headers})
-      .pipe(map(res => res.json()));
+    let headers = this.getHeaders();
+    return this.httpClient.delete(
+      this.environment + '/api/events/' + id + '/',
+      {headers}
+    );
   }
 
-  public getHeaders(){
-      this.headers = new Headers();
-      const userToken = this.authService.getCurrentUser().token;
-      const token = 'Token ' + userToken;
-      this.headers.append('Authorization', token);
-      this.headers.append('Content-Type', 'application/json');
+  getHeaders(){
+    let token = sessionStorage.getItem(this.TOKEN);
+    let headers = new HttpHeaders();
+    headers  = headers.append('Content-Type', 'application/json');
+    if(token != null){
+      headers  = headers.append('Authorization', 'Token ' + token);
+    }
+    return headers;
   }
 }

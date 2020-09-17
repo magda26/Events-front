@@ -1,71 +1,58 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { AuthenticationResponse } from '../../model/login.model';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-  private currentUserSubject: BehaviorSubject<AuthenticationResponse>;
-  private currentUser: Observable<AuthenticationResponse>;
-  readonly CURRENT_USER: string = 'currentUser';
+  public headers: Headers;
+  public environment: any = environment.eventsRestApiHost;
+  private authHttpOptions: any;
+  readonly TOKEN: string = 'token';
 
-  constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<AuthenticationResponse>(
-      JSON.parse(localStorage.getItem(this.CURRENT_USER))
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
+  constructor(private httpClient: HttpClient) {
+    this.authHttpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
   }
 
-  public getCurrentUser(): AuthenticationResponse {
-    return this.currentUserSubject.value;
+  public getCurrentToken(): string {
+    return sessionStorage.getItem(this.TOKEN);
   }
-
   public isCurrentUserAuthenticated(): boolean {
-    return this.currentUserSubject.value != null;
+    return sessionStorage.getItem(this.TOKEN) != null;
   }
-
   login(username: string, password: string) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http
-      .post<any>(
-        `${environment.eventsRestApiHost}/api/api-auth/`,
-        { username, password },
-        { headers }
-      )
-      .pipe(
-        map(user => {
-          return this.createNewAuthenticatedUser(user);
-        })
+      return this.httpClient.post(
+        this.environment  + '/api/api-auth/',
+         { username, password },
+        this.authHttpOptions
       );
-  }
+    }
 
-  public createNewAuthenticatedUser(user: AuthenticationResponse): AuthenticationResponse {
-    localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
-    this.currentUserSubject.next(user);
+  public createNewAuthenticatedUser(user: any) {
+    sessionStorage.setItem(this.TOKEN, user.token);
     return user;
   }
 
   logout() {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    headers.append(
-      'Authorization',
-      this.getCurrentUser().token
+    let headers = this.getHeaders();
+    sessionStorage.removeItem(this.TOKEN);
+    return this.httpClient.post(
+      this.environment  + '/api/v1/logout/',
+      { headers }
     );
-
-    localStorage.removeItem(this.CURRENT_USER);
-    this.currentUserSubject.next(null);
-
-    return this.http
-      .post(`${environment.eventsRestApiHost}/api/logout/`, {
-        headers: headers
-      })
-      .pipe(
-        map(res => {
-          return res;
-        })
-      );
   }
+
+  getHeaders(){
+    let token = sessionStorage.getItem(this.TOKEN);
+    let headers = new HttpHeaders();
+    headers  = headers.append('Content-Type', 'application/json');
+    if(token != null){
+      headers  = headers.append('Authorization', 'Token ' + token);
+    }
+    return headers;
+  }
+
 }

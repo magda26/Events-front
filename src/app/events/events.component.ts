@@ -11,8 +11,8 @@ import Swal from 'sweetalert2';
 
 export class EventsComponent implements OnInit {
 
-  public events: Event[] = [];
-  public selectedEvent: Event = new Event();
+  public events;
+  public selectedEvent;
   public data: any;
   public listEvent: boolean = true;
   public showEventDetail: boolean = false;
@@ -24,7 +24,7 @@ export class EventsComponent implements OnInit {
 
   ngOnInit() {
     this.eventsService.getEvents().subscribe(data => {
-      this.events = data
+      this.events = data;
     });
   }
 

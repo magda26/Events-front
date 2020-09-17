@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
-  error = '';
+  error ;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,21 +43,20 @@ export class LoginComponent implements OnInit {
 
   public login() {
     this.submitted = true;
-
     if (this.loginForm.invalid) {
       return;
     }
-
     this.loading = true;
-    this.loginService.login(this.f.username.value, this.f.password.value)
-    .pipe(first())
-    .subscribe(
-      data => {
-        this.router.navigate([this.returnUrl]);
-      },
-      error => {
+
+    this.loginService.login(this.f.username.value, this.f.password.value).subscribe(
+      (response: any) => {
+        this.loginService.createNewAuthenticatedUser(response);
+        this.router.navigate(['events']);
+        },
+      (err) => {
         this.error = 'Credenciales inválidas';
         this.loading = false;
-      });
+      }
+    );
   }
 }

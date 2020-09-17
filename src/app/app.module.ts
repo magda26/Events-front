@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpModule } from '@angular/http';
 import { LoginComponent } from './login/login.component';
 import { EventsComponent } from './events/events.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
@@ -30,7 +29,6 @@ import { UsersComponent } from './users/users.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpModule,
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),

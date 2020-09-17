@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { RegisterService } from "../services/register/register.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { first } from "rxjs/operators";
 import { LoginService } from "../services/login/login.service";
 
 @Component({
@@ -54,15 +53,14 @@ export class UsersComponent implements OnInit {
 
     let controls = this.registerForm.controls;
     this.registerService.register(controls.username.value, controls.email.value, controls.password1.value, controls.first_name.value, controls.last_name.value)
-      .pipe(first())
-      .subscribe(data => {
-        this.loginService.createNewAuthenticatedUser(data);
+      .subscribe(
+      (response: any) => {
+        this.loginService.createNewAuthenticatedUser(response);
         this.router.navigate(['events']);
-      }, err => {
-        this.show_error = true;
-        this.msj_error = err._body;
-        let msj2 = this.msj_error.split('"');
-        this.msj_error = msj2[3]
-      })
+      },
+      (err) => {
+        this.msj_error = err.error;
+      }
+     );
   }
 }
